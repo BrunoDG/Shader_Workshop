@@ -23,7 +23,8 @@ void main(void) {
     vec2 uv = v_texcoord;
 
 #if defined(BACKGROUND)
-    color.r += step(0.5, fract(st.x + st.y) * 10.0);
+    color.r += step(0.5, fract(st.x + st.y) * 10.0 + u_time);
+    
 #else
     color.rgb = v_normal.xyz;
     // Diffuse shading from directional light

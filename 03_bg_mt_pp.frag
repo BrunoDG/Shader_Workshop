@@ -3,7 +3,7 @@ precision mediump float;
 #endif
 
 //uniform vec3        u_camera;
-uniform sampler2D   u_
+uniform sampler2D   u_scene;
 uniform vec3        u_light;
 
 uniform vec2        u_resolution;
@@ -24,7 +24,8 @@ void main(void) {
     //vec2 uv = v_texcoord;
 
 #if defined(BACKGROUND)
-    color.r += step(0.5, fract(st.x + st.y) * 10.0);
+    color.r += step(0.5, fract(st.x + st.y) * 10.0 + u_time);
+    
 #elif defined(POSTPROCESSING)
     color.g=1.0;
 
