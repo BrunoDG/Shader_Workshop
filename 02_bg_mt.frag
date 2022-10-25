@@ -11,10 +11,7 @@ uniform float       u_time;
 
 varying vec4        v_position;
 varying vec3        v_normal;
-
-#if defined(MODEL_VERTEX_TEXCOORD)
 varying vec2        v_texcoord;
-#endif
 
 void main(void) {
     vec4 color = vec4(0.0, 0.0, 0.0, 1.0);
@@ -23,8 +20,8 @@ void main(void) {
     vec2 uv = v_texcoord;
 
 #if defined(BACKGROUND)
-    color.r += step(0.5, fract(st.x + st.y) * 10.0 + u_time);
-    
+    color.r += step(0.5, fract((st.x + st.y) * 10.0 + u_time));
+
 #else
     color.rgb = v_normal.xyz;
     // Diffuse shading from directional light

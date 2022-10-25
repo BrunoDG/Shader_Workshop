@@ -12,22 +12,23 @@ uniform float       u_time;
 
 varying vec4        v_position;
 varying vec3        v_normal;
-
-#if defined(MODEL_VERTEX_TEXCOORD)
 varying vec2        v_texcoord;
-#endif
 
 void main(void) {
     vec4 color = vec4(0.0, 0.0, 0.0, 1.0);
     vec2 pixel = 1.0/u_resolution;
     vec2 st = gl_FragCoord.xy * pixel;
-    //vec2 uv = v_texcoord;
+    vec2 uv = v_texcoord;
 
 #if defined(BACKGROUND)
-    color.r += step(0.5, fract(st.x + st.y) * 10.0 + u_time);
-    
+    color.r += step(0.5, fract((st.x + st.y) * 10.0 + u_time));
+
 #elif defined(POSTPROCESSING)
-    color.g=1.0;
+    color.rgb=texture2D(u_scene, st).rgb;
+
+    vec2 offset = pixel * 20.0;
+    color.r = texture2D(u_scene, st+offset).r;
+    color.b = texture2D(u_scene, st+offset).b;
 
 #else
     color.rgb = v_normal.xyz;
